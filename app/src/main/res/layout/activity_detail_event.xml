@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.kotlinSub2Ara.DetailEvent">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints">
+        <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/league_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:text=" - 11/12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                    android:layout_alignParentRight="true"
+                    android:text="Full-time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <GridLayout
+                android:rowCount="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_alignParentLeft="true">
+                    <ImageView
+                            android:src="@drawable/ic_terminal_icon"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"/>
+                    <TextView
+                            android:text="@string/club_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_alignParentLeft="true">
+                <ImageView
+                        android:src="@drawable/ic_terminal_icon"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"/>
+                <TextView
+                        android:text="@string/club_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <RelativeLayout>
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_alignParentLeft="true">
+                    <ImageView
+                            android:src="@drawable/ic_terminal_icon"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"/>
+                    <TextView
+                            android:text="@string/club_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </GridLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
