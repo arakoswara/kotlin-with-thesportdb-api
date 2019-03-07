@@ -2,35 +2,70 @@ package com.example.kotlinSub2Ara
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.widget.ProgressBar
-import com.example.kotlinSub2Ara.Api.SportDbRepository
+import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import android.widget.*
+import com.example.kotlinSub2Ara.Adapter.EventAdapter
 import com.example.kotlinSub2Ara.Model.Event
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.kotlinSub2Ara.Presenter.EventPresenter
+import com.example.myapplication.Api.ApiRepository
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var listTeam : RecyclerView
-    private lateinit var progressBar: ProgressBar
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+class MainActivity : AppCompatActivity(), EventView {
+    private lateinit var eventAdapter: EventAdapter
+    private lateinit var presenter: EventPresenter
+    private lateinit var eventName: String
+    private lateinit var target: String
+    private lateinit var idTarget: String
+    private val events: MutableList<Event> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val sportDbRepository = SportDbRepository.create()
-        sportDbRepository.getEvents().enqueue(object: Callback<List<Event>> {
-            override fun onFailure(call: Call<List<Event>>, t: Throwable) {
-                Log.e("THROWABLE ", t.message)
+        club_list.layoutManager = LinearLayoutManager(this)
+        eventAdapter = EventAdapter(events, this) {
+            startActivity<DetailEvent>(
+                "idEvent" to it.idEvent
+            )
+        }
+        club_list.adapter = eventAdapter
+
+        val spinnerItem = arrayOf("Next Match", "Last Match")
+        val spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, spinnerItem)
+        spinner.adapter = spinnerAdapter
+
+        val request = ApiRepository()
+        val gson = Gson()
+        presenter = EventPresenter(this, request, gson)
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
-            override fun onResponse(call: Call<List<Event>>, response: Response<List<Event>>) {
-                Log.d("RESPONSE ", response.message())
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                eventName = spinner.selectedItem.toString()
+
+                if (eventName == "Next Match") {
+                    target = BuildConfig.NEXT_MATCH
+                    idTarget = "4328"
+                }
+                else
+                {
+                    target = BuildConfig.LAST_MATCH
+                    idTarget = "4328"
+                }
+
+                presenter.getEventList(target, idTarget)
             }
-        })
+        }
+    }
+
+    override fun showEventList(data: List<Event>) {
+        events.clear()
+        events.addAll(data)
+        eventAdapter.notifyDataSetChanged()
     }
 }
